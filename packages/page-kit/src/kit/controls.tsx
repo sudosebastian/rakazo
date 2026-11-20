@@ -336,6 +336,8 @@ export function Input({
         className="rk-input"
         type={type}
         min={type === "number" ? min : undefined}
+        // Without this a native form rejects any value that is not a whole step from min (1 when min is 0.5).
+        step={type === "number" ? "any" : undefined}
         // The phone decimal pad has no minus key, so only a field that can't go negative gets it.
         inputMode={
           type === "number" && min !== undefined && Number(min) >= 0 ? "decimal" : undefined

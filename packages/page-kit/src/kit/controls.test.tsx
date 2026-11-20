@@ -335,6 +335,12 @@ describe("controls", () => {
     const view = render(<Input value={1} type="number" min={0} />);
     expect(q<HTMLInputElement>("input")!.inputMode).toBe("decimal");
     expect(q<HTMLInputElement>("input")!.min).toBe("0");
+    view.rerender(<Input value={1} type="number" min={0.5} />);
+    expect(q<HTMLInputElement>("input")!.validity.stepMismatch).toBe(false);
+    expect(q<HTMLInputElement>("input")!.step).toBe("any");
+    view.rerender(<Input value="a" type="text" />);
+    expect(q<HTMLInputElement>("input")!.hasAttribute("step")).toBe(false);
+    view.rerender(<Input value={1} type="number" min={0} />);
     view.rerender(<Input value={1} type="number" min={-5} />);
     expect(q<HTMLInputElement>("input")!.inputMode).toBe("");
     view.rerender(<Input value={1} type="number" />);
